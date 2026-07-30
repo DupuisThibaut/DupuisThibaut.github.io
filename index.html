@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+        <link href="./src/output.css" rel="stylesheet">
+        <title>Dupuis Thibaut</title>
+    </head>
+    <body id="app" class="min-h-screen flex flex-col bg-sky-400 text-center overflow-hidden">
+        <header class="relative flex items-center justify-betwwen gap-2">
+            <a href="https://github.com/DupuisThibaut" title="GitHub">
+                <img alt="GitHub" src="img/github.png" class="w-8 h-8"/>
+            </a>
+            <a href="https://www.linkedin.com/in/thibaut-dupuis-279b5041b/" title="LinkedIn">
+                <img alt="LinkedIn" src="img/linkedin.png" class="w-8 h-8"/>
+            </a>
+            <div class="flex items-center justify-center w-screen">
+                <h1 class="absolute text-3xl font-bold left-1/2 -translate-x-1/2"> DUPUIS Thibaut </h1>
+            </div>
+        </header>
+        <main class="flex-1 flex flex-row h-full min-h-0 gap-y-2">
+            <div class="grow content-center relative">
+                <button v-for="(slide, index) in slides" :key="index" :class="slideClass(index)" @click="changerPage(index)"
+                    class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
+                    rounded bg-sky-500 flex flex-col items-center justify-center h-4/5 w-2/3 gap-4
+                    transform transition-all duration-300">
+                    <h1 class="text-2xl font-bold top-0">{{slide.title}}</h1>
+                    <p>{{slide.description}}</p>
+                    <img :src="slide.image" :class="slide.sizeImage"/>
+                </button>
+            </div>
+        </main>
+        <footer class="relative flex items-center">
+            <div class="absolute z-20" 
+                :class="animationBoat"
+                :style="{width: `${boatValues['scaleX']}px`, height: `${boatValues['scaleY']}px`,transform:  `translateX(${boatValues['posX']}px) translateY(${boatValues['posY']}px)`}">
+                    <img src="img/sunnytest.png" class=""/>
+            </div>
+            
+            <div id="leftFooter" class="flex-1 self-stretch"></div>
+
+            <div v-for="(slide, index) in slides" :key="index" class="flex-1 flex items-center justify-center" >
+                <button @click="changerPage(index)" class="scale-50">
+                    <img src="./img/île.png" class="hover:scale-[125%]"/>
+                </button>
+            </div>
+
+            <div class="flex-1 flex items-center justify-center"></div>
+        </footer>
+    </body>
+    <script>
+        const { createApp, ref, computed, watch, onMounted, onBeforeUnmount } = Vue
+
+
+        createApp({
+            setup() {
+                const slides = ref([
+                    {title: 'Bonjour et bienvenue !', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"Je m'appelle Thibaut Dupuis, je suis diplomé du master informatique Imagine de l'univeristé de Montpellier. "},
+                    {title: "Stage de fin d'études chez Virtualis"},
+                    {title: 'Moteur de jeux avec lancer de rayon en temps réel'},
+                    {title: 'Denoising'},
+                    {title: "Mosaïque d'images"},
+                    {title: 'FitCoach'},
+                    {title: 'Super Moteur 64'},
+                    {title: 'Jeu sérieux'},
+                    {title: 'CV'}
+                ])
+                const maxPage=computed(() => slides.value.length-1);
+                const actuPage=ref(0);
+                const boatValues=ref({
+                    posX: 0,
+                    posY: 0,
+                    scaleX: 0,
+                    scaleY: 0,
+                });
+                const animationBoat=ref('');
+                const leftFooter=ref();
+
+                function changerPage(i){
+                    if(animationBoat.value=='')animationBoat.value='transition-transform duration-300 left-0';
+                    actuPage.value=i;
+                    slideBoat(i);
+                }
+
+                function slideClass(i){
+                    const taille=slides.value.length;
+                    const center=actuPage.value;
+                    const left=(center-1+taille)%taille;
+                    const right=(center+1)%taille;
+                    if(i === center) {
+                        return 'z-20 scale-100 opacity-100 pointer-events-none';
+                    }
+                    if(i === left) {
+                        return '-translate-x-[150%] z-10 scale-90 opacity-80';
+                    }
+                    if(i===right){
+                        return 'translate-x-[50%] z-10 scale-90 opacity-80';
+                    }
+                    else return 'pointer-events-none scale-0 opacity-0';
+                }
+
+                function slideBoat(i){
+                    const taille=document.getElementById("leftFooter").getBoundingClientRect();
+                    let scaleX=taille.width/3;
+                    let scaleY=taille.height/3;
+                    let offsetMid=taille.width*(2/4);
+                    boatValues.value.posX=taille.width*(i+1)+offsetMid;
+                    boatValues.value.posY=taille.height*(1/7);
+                    boatValues.value.scaleX=scaleX;
+                    boatValues.value.scaleY=scaleY;
+                }
+
+                const onResize = () => {
+                    slideBoat(actuPage.value);
+                }
+
+                onMounted(() => {
+                    window.addEventListener('resize', onResize);
+                    leftFooter.value=document.getElementById("leftFooter");
+                    slideBoat(0);
+                });
+
+                onBeforeUnmount(() => { 
+                    window.removeEventListener('resize', onResize); 
+                });
+
+                return {
+                    actuPage,
+                    maxPage,
+                    slideClass,
+                    changerPage,
+                    slides,
+                    boatValues,
+                    animationBoat
+                }
+            }
+        }).mount('#app')
+    </script>
+</html>
