@@ -5,29 +5,46 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
         <link href="./src/output.css" rel="stylesheet">
-        <title>Dupuis Thibaut</title>
+        <title>Thibaut Dupuis</title>
     </head>
     <body id="app" class="min-h-screen flex flex-col bg-sky-400 text-center overflow-hidden">
-        <header class="relative flex items-center justify-betwwen gap-2">
+        <header class="relative flex items-center justify-betwwen gap-2 mt-2 ml-2">
             <a href="https://github.com/DupuisThibaut" title="GitHub">
-                <img alt="GitHub" src="img/github.png" class="w-8 h-8"/>
+                <img alt="GitHub" src="img/icons/github.png" class="w-8 h-8"/>
             </a>
             <a href="https://www.linkedin.com/in/thibaut-dupuis-279b5041b/" title="LinkedIn">
-                <img alt="LinkedIn" src="img/linkedin.png" class="w-8 h-8"/>
+                <img alt="LinkedIn" src="img/icons/linkedin.png" class="w-8 h-8"/>
             </a>
             <div class="flex items-center justify-center w-screen">
-                <h1 class="absolute text-3xl font-bold left-1/2 -translate-x-1/2"> DUPUIS Thibaut </h1>
+                <h1 class="absolute text-3xl font-bold left-1/2 -translate-x-1/2"> Thibaut Dupuis </h1>
+            </div>
+            <div id="language" class="language flex gap-2 mr-2">
+                <button id="fr" @click="changeLanguage('FR')">
+                    <img alt="LinkedIn" src="img/icons/france.png" class="w-8 h-5"/>
+                </button>
+                <button id="fr" @click="changeLanguage('EN')">
+                    <img alt="GitHub" src="img/icons/anglais.png" class="w-8 h-5"/>
+                </button>
             </div>
         </header>
-        <main class="flex-1 flex flex-row h-full min-h-0 gap-y-2">
+        <main class="flex-1 flex flex-row h-full min-h-0 gap-y-2 text-[#4C626B]">
             <div class="grow content-center relative">
                 <button v-for="(slide, index) in slides" :key="index" :class="slideClass(index)" @click="changerPage(index)"
                     class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
-                    rounded bg-sky-500 flex flex-col items-center justify-center h-4/5 w-2/3 gap-4
+                    rounded-3xl bg-[#FFBF73] flex flex-col items-center justify-center h-4/5 w-2/3 gap-4 opacity-90
                     transform transition-all duration-300">
-                    <h1 class="text-2xl font-bold top-0">{{slide.title}}</h1>
-                    <p>{{slide.description}}</p>
-                    <img :src="slide.image" :class="slide.sizeImage"/>
+                    <h1 class="text-2xl font-bold mt-2 text-start">{{t(slide.title)}}</h1>
+                    <div class="flex flex-grow flex-col items-center justify-top gap-y-3 mb-2 mt-2">
+                        <p class="whitespace-pre-line">{{t(slide.description)}}</p>
+                        <img :src="slide.image" :class="slide.sizeImage"/>
+                    </div>
+                    <div v-if="index!=0" class="mb-3">
+                        <div v-if="index==actuPage" class="pointer-events-auto">
+                            <a href="https://www.linkedin.com/in/thibaut-dupuis-279b5041b/">
+                                <p class="underline text-sky-600">Pour en savoir plus !</p>
+                            </a>
+                        </div>
+                    </div>
                 </button>
             </div>
         </main>
@@ -41,8 +58,9 @@
             <div id="leftFooter" class="flex-1 self-stretch"></div>
 
             <div v-for="(slide, index) in slides" :key="index" class="flex-1 flex items-center justify-center" >
-                <button @click="changerPage(index)" class="scale-50">
-                    <img src="./img/île.png" class="hover:scale-[125%]"/>
+                <button @click="changerPage(index)" class="group relative scale-50" :class="hoverFooter(index)" :title="t(slide.title)">
+                    <img :src="slide.image" class="absolute top-0 scale-0 transition-transform duration-300 group-hover:scale-[140%] z-20"/>
+                    <img src="./img/île.png" class="transition-transform duration-300 group-hover:scale-[150%]"/>
                 </button>
             </div>
 
@@ -56,15 +74,15 @@
         createApp({
             setup() {
                 const slides = ref([
-                    {title: 'Bonjour et bienvenue !', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"Je m'appelle Thibaut Dupuis, je suis diplomé du master informatique Imagine de l'univeristé de Montpellier. "},
-                    {title: "Stage de fin d'études chez Virtualis"},
-                    {title: 'Moteur de jeux avec lancer de rayon en temps réel'},
-                    {title: 'Denoising'},
-                    {title: "Mosaïque d'images"},
-                    {title: 'FitCoach'},
-                    {title: 'Super Moteur 64'},
-                    {title: 'Jeu sérieux'},
-                    {title: 'CV'}
+                    {title: 'titleAccueil', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionAccueil"},
+                    {title: "titleVirtualis", image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionVirtualis"},                    
+                    {title: 'titleMoteur', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionMoteur"},
+                    {title: 'titleDenoising', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionDenoising"},
+                    {title: "titleMosaique", image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionMosaique"},
+                    {title: 'titleFitCoach', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionFitCoach"},
+                    {title: 'titleMario', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionMario"},
+                    {title: 'titleJeu', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionJeu"},
+                    {title: 'titleCV', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionCV"},
                 ])
                 const maxPage=computed(() => slides.value.length-1);
                 const actuPage=ref(0);
@@ -76,9 +94,50 @@
                 });
                 const animationBoat=ref('');
                 const leftFooter=ref();
+                const jsonFR={
+                    titleAccueil: "Bonjour et bienvenue !",
+                    titleVirtualis: "Stage de fin d'études chez Virtualis",
+                    titleMoteur: "Moteur de jeux avec lancer de rayon en temps réel",
+                    titleDenoising: "Denoising",
+                    titleMosaique: "Mosaïque d'images",
+                    titleFitCoach: "FitCoach",
+                    titleMario: "Super Moteur 64",
+                    titleJeu: "Jeu sérieux",
+                    titleCV: "CV",
+                    descriptionAccueil: "Je m'appelle Thibaut Dupuis, je suis diplomé du master informatique Imagine de l'univeristé de Montpellier.",
+                    descriptionVirtualis: "Pour la fin de mes études, j'ai travaillé en stage durant 6 mois chez Virtualis, une entreprise de kinésithérapie en Réalité Virtuelle. \n J'ai réalisé deux applications thérapeutiques pour l'analyse et la rééducation du rachis.\nJ'ai principalement utilisé Unity avec C# puis Vue.js pour créer des pages de visualisations des résultats.",
+                    descriptionMoteur: "Projet universitaire de création de moteur de jeux avancé.\nMoteur de jeux codé en C++ possédant un rendu en Ray-Tracing temps réel en GLSL.",
+                    descriptionDenoising: "Projet universitaire de débruitage d'images.\nDeep-Learning en Python pour l'apprentissage de différents bruits dans les images.",
+                    descriptionMosaique: "Projet universitaire de mosaïque d'images.\nCréation d'une application en C++ pour créer une mosaïque d'images à partir d'une image principale",
+                    descriptionFitCoach: "Projet universitaire de programmation mobile.\nApplication d'entraînement sportif codé en Java utilisable sur téléphone avec suivi quotidien.",
+                    descriptionMario: "Projet universitaire de création de moteur de jeux.\nMoteur de jeu en C++ basé sur la création d'un jeu reprenant Super Mario 64",
+                    descriptionJeu: "Projet universitaire sur la création d'un jeu sérieux.\nProgrammé sur Godot, c'est un jeu de gestion de la vie quotidienne à l'université de Montpellier.",
+                    descriptionCV: "Mon C.V."
+                };
+                const jsonEN={
+                    titleAccueil: "Bonjour et bienvenuaaaaaaaaaaae !",
+                    titleVirtualis: "Stage de fin d'études chez Virtualis",
+                    titleMoteur: "Moteur de jeux avec lancer de rayon en temps réel",
+                    titleDenoising: "Denoising",
+                    titleMosaique: "Mosaïque d'images",
+                    titleFitCoach: "FitCoach",
+                    titleMario: "Super Moteur 64",
+                    titleJeu: "Jeu sérieux",
+                    titleCV: "CV",
+                    descriptionAccueil: "Je m'appelle Thaaaaaaaaaibaut Dupuis, je suis diplomé du master informatique Imagine de l'univeristé de Montpellier.",
+                    descriptionVirtualis: "Pour la fin de mes études, j'ai travaillé en stage durant 6 mois chez Virtualis, une entreprise de kinésithérapie en Réalité Virtuelle. \n J'ai réalisé deux applications thérapeutiques pour l'analyse et la rééducation du rachis.\nJ'ai principalement utilisé Unity avec C# puis Vue.js pour créer des pages de visualisations des résultats.",
+                    descriptionMoteur: "Projet universitaire de création de moteur de jeux avancé.\nMoteur de jeux codé en C++ possédant un rendu en Ray-Tracing temps réel en GLSL.",
+                    descriptionDenoising: "Projet universitaire de débruitage d'images.\nDeep-Learning en Python pour l'apprentissage de différents bruits dans les images.",
+                    descriptionMosaique: "Projet universitaire de mosaïque d'images.\nCréation d'une application en C++ pour créer une mosaïque d'images à partir d'une image principale",
+                    descriptionFitCoach: "Projet universitaire de programmation mobile.\nApplication d'entraînement sportif codé en Java utilisable sur téléphone avec suivi quotidien.",
+                    descriptionMario: "Projet universitaire de création de moteur de jeux.\nMoteur de jeu en C++ basé sur la création d'un jeu reprenant Super Mario 64",
+                    descriptionJeu: "Projet universitaire sur la création d'un jeu sérieux.\nProgrammé sur Godot, c'est un jeu de gestion de la vie quotidienne à l'université de Montpellier.",
+                    descriptionCV: "Mon C.V."
+                };
+                const language=ref('FR');
 
                 function changerPage(i){
-                    if(animationBoat.value=='')animationBoat.value='transition-transform duration-300 left-0';
+                    if(animationBoat.value=='') animationBoat.value='transition-transform duration-300 left-0';
                     actuPage.value=i;
                     slideBoat(i);
                 }
@@ -92,10 +151,10 @@
                         return 'z-20 scale-100 opacity-100 pointer-events-none';
                     }
                     if(i === left) {
-                        return '-translate-x-[150%] z-10 scale-90 opacity-80';
+                        return '-translate-x-[150%] z-10 scale-90 opacity-80 hover:scale-[95%]';
                     }
                     if(i===right){
-                        return 'translate-x-[50%] z-10 scale-90 opacity-80';
+                        return 'translate-x-[50%] z-10 scale-90 opacity-80 hover:scale-[95%]';
                     }
                     else return 'pointer-events-none scale-0 opacity-0';
                 }
@@ -111,6 +170,19 @@
                     boatValues.value.scaleY=scaleY;
                 }
 
+                function changeLanguage(i){
+                    language.value=i;
+                };
+
+                function t(key){
+                    const dict = language.value === 'FR' ? jsonFR : jsonEN;
+                    return dict[key] ?? key;
+                }
+
+                function hoverFooter(i){
+                    console.log(i);
+                }
+
                 const onResize = () => {
                     slideBoat(actuPage.value);
                 }
@@ -119,6 +191,7 @@
                     window.addEventListener('resize', onResize);
                     leftFooter.value=document.getElementById("leftFooter");
                     slideBoat(0);
+                    changeLanguage('FR');
                 });
 
                 onBeforeUnmount(() => { 
@@ -132,7 +205,10 @@
                     changerPage,
                     slides,
                     boatValues,
-                    animationBoat
+                    animationBoat,
+                    changeLanguage,
+                    hoverFooter,
+                    t
                 }
             }
         }).mount('#app')
