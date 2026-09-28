@@ -27,41 +27,6 @@
                 </button>
             </div>
         </header>
-        <!-- <main class="flex-1 flex flex-row h-full min-h-0 gap-y-2 text-[#4C626B]">
-            <div class="grow content-center relative">
-                <button v-for="(slide, index) in slides" :key="index" :class="slideClass(index)" @click="changerPage(index)"
-                    class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
-                    rounded-3xl bg-[#FFBF73] flex flex-col items-center justify-center h-4/5 w-2/3 gap-4 opacity-90
-                    transform transition-all duration-300">
-                    <h1 class="text-2xl font-bold mt-2 text-start">{{t(slide.title)}}</h1>
-                    <div v-if="slide.title!='titleCV'" class="flex flex-col items-center justify-top gap-y-3 mb-2 mt-2">
-                        <p class="whitespace-pre-line">{{t(slide.description)}}</p>
-                        <img v-if="slide.video==''" :src="slide.image" :class="slide.sizeImage" />
-                        <video v-if="slide.video!=''" :class="slide.sizeImage" class="pointer-events-auto" controls>
-                            <source :src="slide.video" type="video/mp4"/>
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                    <div v-if="slide.title=='titleCV'" class="flex-1 flex items-center justify-center w-full min-h-0 mb-2 mt-2">
-                        <img :src="slide.image" class="max-w-full max-h-full object-contain" />
-                    </div> -->
-        <!-- <main class="flex-1 flex flex-row h-full min-h-0 gap-y-2 text-[#4C626B]">
-            <div class="grow content-center relative">
-                <button v-for="(slide, index) in slides" :key="index" :class="slideClass(index)" @click="changerPage(index)"
-                    class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
-                    rounded-3xl bg-[#FFBF73] flex flex-col items-center justify-start gap-4 opacity-90
-                    transform transition-all duration-300 overflow-hidden
-                    h-[78dvh] min-h-[320px] max-h-[860px] w-[92vw] sm:w-[78vw] md:w-[70vw] lg:w-[60vw] max-w-[900px]
-                    px-4 py-5 sm:px-6 sm:py-6">
-                    <h1 class="text-xl sm:text-2xl font-bold mt-2 text-start w-full">{{t(slide.title)}}</h1>
-                    <div v-if="slide.title!='titleCV'" class="flex-1 flex flex-col items-center justify-start gap-y-3 w-full min-h-0 overflow-hidden">
-                        <p class="whitespace-pre-line text-sm sm:text-base leading-relaxed text-center sm:text-left">{{t(slide.description)}}</p>
-                        <div class="flex-1 flex items-center justify-center w-full min-h-0">
-                            <img v-if="slide.video==''" :src="slide.image" :class="['max-w-full max-h-full object-contain', slide.sizeImage]" />
-                            <video v-if="slide.video!=''" :class="['max-w-full max-h-full object-contain', slide.sizeImage]" class="pointer-events-auto" controls>
-                                <source :src="slide.video" type="video/mp4"/>
-                                Your browser does not support the video tag.
-                            </video> -->
         <main class="flex-1 flex flex-row h-full min-h-0 gap-y-2 text-[#4C626B]">
             <div class="grow content-center relative">
                 <button v-for="(slide, index) in slides" :key="index" :class="slideClass(index)" @click="changerPage(index)"
@@ -144,7 +109,6 @@
                     {title: 'titleFitCoach', image: 'img/pages/main/fitcoach.png', video: '', sizeImage:'', description:"descriptionFitCoach", link: 'https://github.com/DupuisThibaut/FitCoach', message: 'messageFitCoach', hoverSize: 'group-hover:scale-[140%]', preview: 'img/pages/preview/fitcoach.png'},
                     {title: 'titleCV', image: 'img/pages/main/double_cv.png', pdfFR: 'img/pages/main/CVFR.pdf', pdfEN: 'img/pages/main/CVEN.pdf', video: '', sizeImage:'', description:"descriptionCV", link: 'img/pages/main/CVFR.png', message: 'messageCV', hoverSize: 'group-hover:scale-[140%]', preview: 'img/pages/preview/CVpreview.png'},
                 ])
-                const maxPage=computed(() => slides.value.length-1);
                 const actuPage=ref(0);
                 const boatValues=ref({
                     posX: 0,
@@ -280,7 +244,6 @@
 
                 return {
                     actuPage,
-                    maxPage,
                     slideClass,
                     changerPage,
                     slides,
