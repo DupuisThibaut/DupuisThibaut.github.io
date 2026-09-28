@@ -7,8 +7,8 @@
         <link href="./src/output.css" rel="stylesheet">
         <title>Thibaut Dupuis</title>
     </head>
-    <body id="app" class="min-h-screen flex flex-col bg-sky-400 text-center overflow-hidden">
-        <header class="relative flex items-center justify-betwwen gap-2 mt-2 ml-2">
+    <body id="app" class="min-h-screen flex flex-col bg-blue-400 text-center overflow-x-hidden">
+        <header class="relative flex items-center justify-between gap-2 mt-2 ml-2">
             <a href="https://github.com/DupuisThibaut" title="GitHub">
                 <img alt="GitHub" src="img/icons/github.png" class="w-8 h-8"/>
             </a>
@@ -16,7 +16,7 @@
                 <img alt="LinkedIn" src="img/icons/linkedin.png" class="w-8 h-8"/>
             </a>
             <div class="flex items-center justify-center w-screen">
-                <h1 class="absolute text-3xl font-bold left-1/2 -translate-x-1/2"> Thibaut Dupuis </h1>
+                <h1 class="absolute text-2xl sm:text-3xl font-bold left-1/2 -translate-x-1/2"> Thibaut Dupuis </h1>
             </div>
             <div id="language" class="language flex gap-2 mr-2">
                 <button id="fr" @click="changeLanguage('FR')">
@@ -27,23 +27,82 @@
                 </button>
             </div>
         </header>
-        <main class="flex-1 flex flex-row h-full min-h-0 gap-y-2 text-[#4C626B]">
+        <!-- <main class="flex-1 flex flex-row h-full min-h-0 gap-y-2 text-[#4C626B]">
             <div class="grow content-center relative">
                 <button v-for="(slide, index) in slides" :key="index" :class="slideClass(index)" @click="changerPage(index)"
                     class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
                     rounded-3xl bg-[#FFBF73] flex flex-col items-center justify-center h-4/5 w-2/3 gap-4 opacity-90
                     transform transition-all duration-300">
                     <h1 class="text-2xl font-bold mt-2 text-start">{{t(slide.title)}}</h1>
-                    <div class="flex flex-grow flex-col items-center justify-top gap-y-3 mb-2 mt-2">
+                    <div v-if="slide.title!='titleCV'" class="flex flex-col items-center justify-top gap-y-3 mb-2 mt-2">
                         <p class="whitespace-pre-line">{{t(slide.description)}}</p>
-                        <img :src="slide.image" :class="slide.sizeImage"/>
+                        <img v-if="slide.video==''" :src="slide.image" :class="slide.sizeImage" />
+                        <video v-if="slide.video!=''" :class="slide.sizeImage" class="pointer-events-auto" controls>
+                            <source :src="slide.video" type="video/mp4"/>
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
-                    <div v-if="index!=0" class="mb-3">
-                        <div v-if="index==actuPage" class="pointer-events-auto">
-                            <a href="https://www.linkedin.com/in/thibaut-dupuis-279b5041b/">
-                                <p class="underline text-sky-600">Pour en savoir plus !</p>
+                    <div v-if="slide.title=='titleCV'" class="flex-1 flex items-center justify-center w-full min-h-0 mb-2 mt-2">
+                        <img :src="slide.image" class="max-w-full max-h-full object-contain" />
+                    </div> -->
+        <!-- <main class="flex-1 flex flex-row h-full min-h-0 gap-y-2 text-[#4C626B]">
+            <div class="grow content-center relative">
+                <button v-for="(slide, index) in slides" :key="index" :class="slideClass(index)" @click="changerPage(index)"
+                    class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
+                    rounded-3xl bg-[#FFBF73] flex flex-col items-center justify-start gap-4 opacity-90
+                    transform transition-all duration-300 overflow-hidden
+                    h-[78dvh] min-h-[320px] max-h-[860px] w-[92vw] sm:w-[78vw] md:w-[70vw] lg:w-[60vw] max-w-[900px]
+                    px-4 py-5 sm:px-6 sm:py-6">
+                    <h1 class="text-xl sm:text-2xl font-bold mt-2 text-start w-full">{{t(slide.title)}}</h1>
+                    <div v-if="slide.title!='titleCV'" class="flex-1 flex flex-col items-center justify-start gap-y-3 w-full min-h-0 overflow-hidden">
+                        <p class="whitespace-pre-line text-sm sm:text-base leading-relaxed text-center sm:text-left">{{t(slide.description)}}</p>
+                        <div class="flex-1 flex items-center justify-center w-full min-h-0">
+                            <img v-if="slide.video==''" :src="slide.image" :class="['max-w-full max-h-full object-contain', slide.sizeImage]" />
+                            <video v-if="slide.video!=''" :class="['max-w-full max-h-full object-contain', slide.sizeImage]" class="pointer-events-auto" controls>
+                                <source :src="slide.video" type="video/mp4"/>
+                                Your browser does not support the video tag.
+                            </video> -->
+        <main class="flex-1 flex flex-row h-full min-h-0 gap-y-2 text-[#4C626B]">
+            <div class="grow content-center relative">
+                <button v-for="(slide, index) in slides" :key="index" :class="slideClass(index)" @click="changerPage(index)"
+                    class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
+                    rounded-3xl bg-[#FFC152] flex flex-col items-center justify-start gap-4 opacity-90
+                    transform transition-all duration-300 overflow-hidden
+                    h-[68dvh] min-h-[320px] max-h-[860px] w-[92vw] sm:w-[78vw] md:w-[70vw] lg:w-[60vw] max-w-[1400px]
+                    px-4 py-5 sm:px-6 sm:py-6">
+                    <h1 class="text-xl sm:text-2xl font-bold mt-2 text-center w-full">{{t(slide.title)}}</h1>
+                    <div v-if="slide.title!='titleCV'" class="flex-1 flex flex-col items-center justify-start gap-y-3 w-full min-h-0 overflow-hidden">
+                        <p class="whitespace-pre-line text-sm sm:text-base leading-relaxed text-center sm:text-center">{{t(slide.description)}}</p>
+                        <div class="flex-1 flex items-center justify-center w-full min-h-0">
+                            <img v-if="slide.video==''" :src="slide.image" :class="['max-w-full max-h-full object-contain', slide.sizeImage]" />
+                            <video v-if="slide.video!=''" :class="['max-w-full max-h-full object-contain', slide.sizeImage]" class="pointer-events-auto" controls>
+                                <source :src="slide.video" type="video/mp4"/>
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                    <div v-if="slide.title=='titleCV'" class="flex-1 flex items-center justify-center w-full min-h-0 mb-2 mt-2">
+                        <img :src="slide.image" class="max-w-full max-h-full object-contain" />
+                    </div>
+                    <div v-if="slide.link!='' && slide.title!='titleCV'" class="mb-3">
+                        <div class="pointer-events-auto">
+                            <a :href="slide.link">
+                                <p class="underline text-sky-600">{{t(slide.message)}}</p>
                             </a>
                         </div>
+                    </div>
+                    <div v-if="slide.title=='titleCV'" class="mb-3" >
+                        <div class="pointer-events-auto">
+                            <a v-if="language=='FR'" :href="slide.pdfFR">
+                                <p class="underline text-sky-600">{{t(slide.message)}}</p>
+                            </a>
+                            <a v-if="language=='EN'" :href="slide.pdfEN">
+                                <p class="underline text-sky-600">{{t(slide.message)}}</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div v-if="slide.link==''" class="mb-3">
+                        <p>{{t(slide.message)}}</p>
                     </div>
                 </button>
             </div>
@@ -52,15 +111,15 @@
             <div class="absolute z-20" 
                 :class="animationBoat"
                 :style="{width: `${boatValues['scaleX']}px`, height: `${boatValues['scaleY']}px`,transform:  `translateX(${boatValues['posX']}px) translateY(${boatValues['posY']}px)`}">
-                    <img src="img/sunnytest.png" class=""/>
+                    <img src="img/footer/sunny.png" class=""/>
             </div>
             
             <div id="leftFooter" class="flex-1 self-stretch"></div>
 
             <div v-for="(slide, index) in slides" :key="index" class="flex-1 flex items-center justify-center" >
-                <button @click="changerPage(index)" class="group relative scale-50" :class="hoverFooter(index)" :title="t(slide.title)">
-                    <img :src="slide.image" class="absolute top-0 scale-0 transition-transform duration-300 group-hover:scale-[140%] z-20"/>
-                    <img src="./img/île.png" class="transition-transform duration-300 group-hover:scale-[150%]"/>
+                <button @click="changerPage(index)" class="group relative scale-50" :title="t(slide.title)">
+                    <img :src="slide.preview" class="absolute top-0 scale-0 transition-transform duration-300 z-20" :class="slide.hoverSize"/>
+                    <img src="./img/footer/île.png" class="transition-transform duration-300 group-hover:scale-[150%]"/>
                 </button>
             </div>
 
@@ -74,15 +133,16 @@
         createApp({
             setup() {
                 const slides = ref([
-                    {title: 'titleAccueil', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionAccueil"},
-                    {title: "titleVirtualis", image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionVirtualis"},                    
-                    {title: 'titleMoteur', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionMoteur"},
-                    {title: 'titleDenoising', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionDenoising"},
-                    {title: "titleMosaique", image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionMosaique"},
-                    {title: 'titleFitCoach', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionFitCoach"},
-                    {title: 'titleMario', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionMario"},
-                    {title: 'titleJeu', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionJeu"},
-                    {title: 'titleCV', image: 'img/pages/sunny.png', sizeImage:'w-1/2 h-5/9', description:"descriptionCV"},
+                    {title: 'titleAccueil', image: 'img/pages/main/cat.png', image2: '', video: '', sizeImage:'w-1/2 h-5/9', description:"descriptionAccueil", link: '', message: 'messageAccueil', hoverSize: 'group-hover:scale-[100%]', preview: 'img/pages/preview/cat.png'},
+                    {title: "titleVirtualis", image: 'img/pages/main/virtualis.png', video: '', sizeImage:'w-[90%] h-[70%]', description:"descriptionVirtualis", link: '', message: 'messageVirtualis', hoverSize: 'group-hover:scale-[140%]', preview: 'img/pages/preview/virtualis.png'},                
+                    {title: 'titleMoteur', image: '', video: 'img/pages/main/raytracing.mp4', sizeImage:'w-3/4 h-8/9', description:"descriptionMoteur", link: 'https://github.com/DupuisThibaut/Projet3D', message: 'messageMoteur', hoverSize: 'group-hover:scale-[140%]', preview: 'img/pages/preview/ray.png'},
+                    {title: 'titleMario', image: '', video: 'img/pages/main/supermario64.mp4', sizeImage:'w-1/2 h-5/9', description:"descriptionMario", link: 'https://github.com/DupuisThibaut/Super-Moteur-64', message: 'messageMario', hoverSize: 'group-hover:scale-[140%]', preview: 'img/pages/preview/mario.png'},
+                    {title: 'titleJeu', image: 'img/pages/main/jeuserieux.png', video: '', sizeImage:'w-[90%] h-[70%]', description:"descriptionJeu", link: 'https://github.com/DupuisThibaut/Jeu-serieux', message: 'messageJeu', hoverSize: 'group-hover:scale-[140%]', preview: 'img/pages/preview/jeuserieux.png'},
+                    {title: 'titleFear', image: '', video: 'img/pages/main/FearMansion.mp4', sizeImage:'w-3/4 h-5/9', description:"descriptionFear", link: 'https://github.com/DupuisThibaut/fear-mansion', message: 'messageFear', hoverSize: 'group-hover:scale-[140%]', preview: 'img/pages/preview/fear.png'},
+                    {title: 'titleDenoising', image: 'img/pages/main/denoising.png', video: '', sizeImage:'w-[80%] h-[60%]', description:"descriptionDenoising", link: 'https://github.com/DupuisThibaut/Denoising', message: 'messageDenoising', hoverSize: 'group-hover:scale-[140%]', preview: 'img/pages/preview/denoising.png'},
+                    {title: "titleMosaique", image: 'img/pages/main/mosaique.png', video: '', sizeImage:'w-[100%] h-[80%]', description:"descriptionMosaique", link: 'https://github.com/Kuurp/Projet-mosaique-image', message: 'messageMosaique', hoverSize: 'group-hover:scale-[140%]', preview: 'img/pages/preview/mosaique.png'},
+                    {title: 'titleFitCoach', image: 'img/pages/main/fitcoach.png', video: '', sizeImage:'', description:"descriptionFitCoach", link: 'https://github.com/DupuisThibaut/FitCoach', message: 'messageFitCoach', hoverSize: 'group-hover:scale-[140%]', preview: 'img/pages/preview/fitcoach.png'},
+                    {title: 'titleCV', image: 'img/pages/main/double_cv.png', pdfFR: 'img/pages/main/CVFR.pdf', pdfEN: 'img/pages/main/CVEN.pdf', video: '', sizeImage:'', description:"descriptionCV", link: 'img/pages/main/CVFR.png', message: 'messageCV', hoverSize: 'group-hover:scale-[140%]', preview: 'img/pages/preview/CVpreview.png'},
                 ])
                 const maxPage=computed(() => slides.value.length-1);
                 const actuPage=ref(0);
@@ -103,36 +163,60 @@
                     titleFitCoach: "FitCoach",
                     titleMario: "Super Moteur 64",
                     titleJeu: "Jeu sérieux",
+                    titleFear: "Fear mansion",
                     titleCV: "CV",
-                    descriptionAccueil: "Je m'appelle Thibaut Dupuis, je suis diplomé du master informatique Imagine de l'univeristé de Montpellier.",
+                    descriptionAccueil: "Je m'appelle Thibaut Dupuis, je suis diplomé du master informatique Imagine de l'univeristé de Montpellier.\n Je suis actuellement à la recherche d'un emploi dans le domaine de la programmation 3D/VR interactive.",
                     descriptionVirtualis: "Pour la fin de mes études, j'ai travaillé en stage durant 6 mois chez Virtualis, une entreprise de kinésithérapie en Réalité Virtuelle. \n J'ai réalisé deux applications thérapeutiques pour l'analyse et la rééducation du rachis.\nJ'ai principalement utilisé Unity avec C# puis Vue.js pour créer des pages de visualisations des résultats.",
                     descriptionMoteur: "Projet universitaire de création de moteur de jeux avancé.\nMoteur de jeux codé en C++ possédant un rendu en Ray-Tracing temps réel en GLSL.",
                     descriptionDenoising: "Projet universitaire de débruitage d'images.\nDeep-Learning en Python pour l'apprentissage de différents bruits dans les images.",
-                    descriptionMosaique: "Projet universitaire de mosaïque d'images.\nCréation d'une application en C++ pour créer une mosaïque d'images à partir d'une image principale",
+                    descriptionMosaique: "Projet universitaire de mosaïque d'images.\nCréation d'une application en C++ pour créer une mosaïque d'images à partir d'une image principale.",
                     descriptionFitCoach: "Projet universitaire de programmation mobile.\nApplication d'entraînement sportif codé en Java utilisable sur téléphone avec suivi quotidien.",
-                    descriptionMario: "Projet universitaire de création de moteur de jeux.\nMoteur de jeu en C++ basé sur la création d'un jeu reprenant Super Mario 64",
+                    descriptionMario: "Projet universitaire de création de moteur de jeux.\nMoteur de jeu en C++ basé sur la création d'un jeu reprenant Super Mario 64.",
                     descriptionJeu: "Projet universitaire sur la création d'un jeu sérieux.\nProgrammé sur Godot, c'est un jeu de gestion de la vie quotidienne à l'université de Montpellier.",
-                    descriptionCV: "Mon C.V."
+                    descriptionFear: "Projet universitaire de création d'un jeu en Réalité Virtuelle.\nProgrammé sur Godot, Fear Mansion est un jeu d'horreur d'escape game avec un monstre à éviter.",
+                    descriptionCV: "Mon C.V.",
+                    messageAccueil: "Changez de page si vous voulez en apprendre plus sur moi !",
+                    messageVirtualis: "Mon travail étant confidentiel, aucunes images ne peut être affiché.",
+                    messageMoteur: "Pour en savoir plus !",
+                    messageDenoising: "Pour en savoir plus !",
+                    messageMosaique: "Pour en savoir plus !",
+                    messageFitCoach: "Pour en savoir plus !",
+                    messageMario: "Pour en savoir plus !",
+                    messageJeu: "Pour en savoir plus !",
+                    messageFear: "Pour en savoir plus !",
+                    messageCV: "Pour en savoir plus !"
                 };
                 const jsonEN={
-                    titleAccueil: "Bonjour et bienvenuaaaaaaaaaaae !",
-                    titleVirtualis: "Stage de fin d'études chez Virtualis",
-                    titleMoteur: "Moteur de jeux avec lancer de rayon en temps réel",
+                    titleAccueil: "Welcome !",
+                    titleVirtualis: "End-of-studies internship at Virtualis",
+                    titleMoteur: "Game engin with real-time ray tracing",
                     titleDenoising: "Denoising",
-                    titleMosaique: "Mosaïque d'images",
+                    titleMosaique: "Image mosaic",
                     titleFitCoach: "FitCoach",
                     titleMario: "Super Moteur 64",
-                    titleJeu: "Jeu sérieux",
-                    titleCV: "CV",
-                    descriptionAccueil: "Je m'appelle Thaaaaaaaaaibaut Dupuis, je suis diplomé du master informatique Imagine de l'univeristé de Montpellier.",
-                    descriptionVirtualis: "Pour la fin de mes études, j'ai travaillé en stage durant 6 mois chez Virtualis, une entreprise de kinésithérapie en Réalité Virtuelle. \n J'ai réalisé deux applications thérapeutiques pour l'analyse et la rééducation du rachis.\nJ'ai principalement utilisé Unity avec C# puis Vue.js pour créer des pages de visualisations des résultats.",
-                    descriptionMoteur: "Projet universitaire de création de moteur de jeux avancé.\nMoteur de jeux codé en C++ possédant un rendu en Ray-Tracing temps réel en GLSL.",
-                    descriptionDenoising: "Projet universitaire de débruitage d'images.\nDeep-Learning en Python pour l'apprentissage de différents bruits dans les images.",
-                    descriptionMosaique: "Projet universitaire de mosaïque d'images.\nCréation d'une application en C++ pour créer une mosaïque d'images à partir d'une image principale",
-                    descriptionFitCoach: "Projet universitaire de programmation mobile.\nApplication d'entraînement sportif codé en Java utilisable sur téléphone avec suivi quotidien.",
-                    descriptionMario: "Projet universitaire de création de moteur de jeux.\nMoteur de jeu en C++ basé sur la création d'un jeu reprenant Super Mario 64",
-                    descriptionJeu: "Projet universitaire sur la création d'un jeu sérieux.\nProgrammé sur Godot, c'est un jeu de gestion de la vie quotidienne à l'université de Montpellier.",
-                    descriptionCV: "Mon C.V."
+                    titleJeu: "Serious game",
+                    titleFear: "Fear mansion",
+                    titleCV: "Resume",
+                    descriptionAccueil: "My name is Thibaut Dupuis, I graduated from the Master's degree in computer science Imagine at the University of Montpellier.\n I'm actually searching for a job in the field of interactive 3D/VR programming.",
+                    descriptionVirtualis: "For my studies end, I worked 6 months at Virtualis, a virtual reality phisical therapy company. \n I have developed two therapeutic applications for the analysis and the rehabilitation of the spine.\nI have mainly used Unity with C# and Vue.js to create pages displaying the results.",
+                    descriptionMoteur: "University project to develop an advanced game engine.\nA game engine written in C++ featuring real-time ray-tracing rendering in GLSL.",
+                    descriptionDenoising: "University project of image denoising.\nDeep-Learning in Python for learning different noises in images.",
+                    descriptionMosaique: "University project of image mosaic.\nCreating a C++ application to generate a mosaic of images from a main image.",
+                    descriptionFitCoach: "University project of mobile programming.\nA sports training app written in Java that can be used on a phone and includes daily tracking.",
+                    descriptionMario: "University project to develop a game engine.\nA C++ game engine based on the creation of a game modeled after Super Mario 64.",
+                    descriptionJeu: "University project to develop a serious game.\nDeveloped using Godot, it's a game about managing daily life at the University of Montpellier.",
+                    descriptionFear: "University project to develop a virtual reality game.\nDeveloped using Godot, Fear Mansion is a horror escape game in which you must avoid a monster.",
+                    descriptionCV: "My resume.",
+                    messageAccueil: "Change page if you want to learn more !",
+                    messageVirtualis: "My work is confidential, no images can be displayed.",
+                    messageMoteur: "To know more !",
+                    messageDenoising: "To know more !",
+                    messageMosaique: "To know more !",
+                    messageFitCoach: "To know more !",
+                    messageMario: "To know more !",
+                    messageJeu: "To know more !",
+                    messageFear: "To know more !",
+                    messageCV: "To know more !"
                 };
                 const language=ref('FR');
 
@@ -203,6 +287,7 @@
                     boatValues,
                     animationBoat,
                     changeLanguage,
+                    language,
                     t
                 }
             }
